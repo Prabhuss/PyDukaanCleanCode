@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PyConsumerApp.Views.Offers.OffersTilePage"
+    xmlns:behavior="clr-namespace:PyConsumerApp.Behaviors"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:PyConsumerApp.Controls"
+    xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    
+    x:Name="offerPage"
+    Title="Offer Zone"
+    BackgroundColor="{DynamicResource Gray-White}"
+    xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--RowDefinition Height="*" /-->
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  Title View  -->
+            <!--controls:TitleView Title="Categories" Grid.Row="0"-->
+            <controls:TitleView Title="Latest Offers" Grid.Row="0">
+
+                <controls:TitleView.LeadingView>
+                    <!--  Search Button  -->
+                    <buttons:SfButton  x:Name="SearchButton" IsVisible="True"
+                                       CornerRadius="4"
+                                       Command="{Binding BindingContext.SearchButtonCommand, Source={x:Reference offerPage}}"
+                                       CommandParameter="{x:Reference SearchButton}"
+                                       Style="{StaticResource IconButtonStyle }"
+                                       Text="{StaticResource Search}" />
+                </controls:TitleView.LeadingView>
+            </controls:TitleView>
+
+
+            <!--StackLayout Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <SearchBar x:Name="filterText" HeightRequest="40"
+                                    Placeholder="Search here to filter"
+                                    TextChanged="filterText_TextChanged"  Grid.Row="0"/>
+                    <listView:SfListView x:Name="listView" 
+                                         Grid.Row="1" ItemSize="60" 
+                                         ItemsSource="{Binding Categories}"
+                                         Style="{StaticResource SfListViewStyle}">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </Grid>
+            </StackLayout-->
+
+
+
+
+            <!--  ListView for Category  -->
+            <listView:SfListView
+                x:Name="CategoryTile"
+                Grid.Row="1"
+                Padding="8"
+                AutoFitMode="DynamicHeight"
+                ItemSpacing="8"
+                ItemsSource="{Binding OfferList}"
+                Style="{StaticResource SfListViewStyle}">
+
+                <listView:SfListView.Behaviors>
+                    <behavior:SfListViewTapBehavior 
+                        Command="{Binding Path=BindingContext.OfferSelectedCommand, Source={x:Reference offerPage}}"
+                    />
+                </listView:SfListView.Behaviors>
+
+                <listView:SfListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <ActivityIndicator x:Name="activityIndicator" Color="Red"
+                                               IsVisible="{Binding IsLoading}"
+                                               IsRunning="{Binding IsLoading}"/>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.HeaderTemplate>
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Category Image  -->
+                            <Image
+                                Grid.Row="0"
+                                Margin="0"
+                                BackgroundColor="{DynamicResource Gray-200}"
+                                Source="{Binding OfferIconSource}">
+                            </Image>
+
+                            <!--  Category Name  -->
+                            <Label
+                                Grid.Row="1"
+                                Margin="0,0,0,8"
+                                FontFamily="{StaticResource Montserrat-SemiBold}"
+                                FontSize="14"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="End"
+                                LineHeight="{OnPlatform Default=-1,
+                                                        Android=1.5}"
+                                Text="{Binding OfferName}"
+                                TextColor="{DynamicResource Gray-900}" />
+
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+                <!--  Layout to customize no. of columns in SfListView  -->
+                <listView:SfListView.LayoutManager>
+                    <listView:GridLayout SpanCount="{core:OnPlatformOrientationIntValue Desktop=4, PhonePortrait=1, PhoneLandscape=2, TabletPortrait=3, TabletLandscape=4}" />
+                </listView:SfListView.LayoutManager>
+
+            </listView:SfListView>
+            <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="#b51700" />
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

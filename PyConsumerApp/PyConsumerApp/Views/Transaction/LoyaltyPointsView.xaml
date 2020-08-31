@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:helper="clr-namespace:PyConsumerApp.Helpers"
+             mc:Ignorable="d"
+             x:Class="PyConsumerApp.Views.Transaction.LoyaltyPointsView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <Grid Padding="0"
+        BackgroundColor="{DynamicResource Gray-White}"
+              ColumnSpacing="0"
+              RowSpacing="0"
+            x:Name="grid"
+            VerticalOptions="{OnIdiom Default=Start, Desktop=Fill}"
+            >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" Grid.Row="0">
+            <!-- Text="{Binding TotalPoints, StringFormat='{Total Loyalty Points: {0}}'}"-->
+            <Label
+                    Text="Points: 3"
+                    helper:RTLHelper.Margin="{OnIdiom Desktop='16,0,0,0',
+                                                        Tablet='18,0,0,0',
+                                                        Phone='20,10,0,0'}"
+                    HorizontalOptions="{OnIdiom Default=Center,
+                                                Phone=StartAndExpand}"
+                    Style="{StaticResource CommonLabelStyle}"
+                    TextColor="Black"
+                    FontSize="Medium"
+                    VerticalOptions="Center"/>
+
+            <!--  Edit/Change button  -->
+            <buttons:SfButton
+                    Margin="{OnIdiom Default='16,16,16,0',
+                                        Phone='16,0,16,0'}"
+                    BorderWidth="0"
+                    x:Name="editButton"
+                    Command="{Binding BindingContext.EditCommand }"
+                    CornerRadius="4"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="14"
+                    HeightRequest="{OnIdiom Desktop=18,
+                                            Default=35}"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SfButtonStyle}"
+                    Text="Redeem  Points"
+                    TextColor="{StaticResource HyperLink}"/>
+            </StackLayout>
+            <!--  Address  -->
+            <Label
+                helper:RTLHelper.Margin="{OnIdiom Desktop='16,16,8,0',
+                                                    Tablet='16,0,0,0',
+                                                    Phone='20,0,20,5'}"
+                Grid.Row="1"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="StartAndExpand"
+                Text="Click on 'Redeemable Points' to check how much Points you can Redeem for this order."/>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

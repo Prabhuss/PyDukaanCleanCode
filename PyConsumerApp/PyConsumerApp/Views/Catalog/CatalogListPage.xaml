@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PyConsumerApp.Views.Catalog.CatalogListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badge="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
+    xmlns:behavior="clr-namespace:PyConsumerApp.Behaviors.Catalog"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:commonBehavior="clr-namespace:PyConsumerApp.Behaviors"
+    xmlns:controls="clr-namespace:PyConsumerApp.Controls"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+    xmlns:helper="clr-namespace:PyConsumerApp.Helpers"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    xmlns:template="clr-namespace:PyConsumerApp.Views.Templates"
+    x:Name="catalogListPage"
+    Title="Catalog List page"
+    NavigationPage.HasNavigationBar="False"
+    Style="{StaticResource ContentPageStyle}"
+    xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
+    <ContentPage.Behaviors>
+        <behavior:CartBehavior />
+        
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+            <converter:IntToThicknessConverter x:Key="intToThicknessConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!--  Title View  -->
+            <controls:TitleView Title="{Binding CategoryName}" Grid.Row="0">
+                <controls:TitleView.LeadingView>
+                    <buttons:SfButton
+                        x:Name="backButton"
+                        Command="{Binding Path=BindingContext.BackButtonCommand, Source={x:Reference catalogListPage}}"
+                        CommandParameter="{x:Reference backButton}"
+                        CornerRadius="4"
+                        Style="{StaticResource IconButtonStyle}"
+                        Text="{StaticResource Back}" />
+                </controls:TitleView.LeadingView>
+                <controls:TitleView.TrailingView>
+                    <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+
+                            <buttons:SfButton  x:Name="SearchButton" IsVisible="True"
+                                       CornerRadius="4"
+                                       Command="{Binding BindingContext.SearchButtonCommand, Source={x:Reference catalogListPage}}"
+                                       CommandParameter="{x:Reference SearchButton}"
+                                       Style="{StaticResource IconButtonStyle }"
+                                       Text="{StaticResource Search}" />
+                            <badge:SfBadgeView
+                            Margin="{Binding Path=BindingContext.CartItemCount, Source={x:Reference catalogListPage}, Converter={x:StaticResource intToThicknessConverter}}"
+                            Padding="0"
+                            BadgeText="{Binding Path=BindingContext.CartItemCount, Source={x:Reference catalogListPage}, Mode=TwoWay}"
+                            HeightRequest="42"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            WidthRequest="40">
+                            <badge:SfBadgeView.Content>
+                                <buttons:SfButton
+                                    Command="{Binding Path=BindingContext.CardItemCommand, Source={x:Reference ListViewList}}"
+                                    CornerRadius="4"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    Text="{StaticResource Cart}" />
+                            </badge:SfBadgeView.Content>
+                            <badge:SfBadgeView.BadgeSettings>
+                                <badge:BadgeSetting
+                                    BackgroundColor="{DynamicResource PrimaryColor}"
+                                    BadgeType="None"
+                                    FontSize="9"
+                                    Offset="-5,10" />
+                            </badge:SfBadgeView.BadgeSettings>
+                        </badge:SfBadgeView>
+                    </StackLayout>
+                </controls:TitleView.TrailingView>
+            </controls:TitleView>
+            <!--  ListView for catalog list  -->
+            <!-- 
+                To show filters or sorting options, please add below line to SfListView
+                    HeaderTemplate="{StaticResource CatalogDefaultHeaderTemplate}" 
+            -->
+            <listView:SfListView
+                x:Name="ListViewList"
+                Grid.Row="1"
+                Margin="{OnIdiom Default='0,8,8,0',
+                                 Desktop='15,15,15,0'}"
+                AutoFitMode="Height"
+                HorizontalOptions="FillAndExpand"
+                IsStickyHeader="False"
+                ItemSpacing="8,8,0,8"
+                ItemsSource="{Binding Products}"
+                Style="{StaticResource SfListViewStyle}">
+
+                <!--Added for pagination-->
+                <!--ActivityIndicator x:Name="activityIndicator" Color="Blue" IsRunning="True" IsRunning="{Binding IsLoading,Mode=TwoWay}"/-->
+
+                <listView:SfListView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid >
+
+                            <ActivityIndicator x:Name="activityIndicator" Color="Red"
+                                               IsVisible="{Binding IsLoading}"
+                                               IsRunning="{Binding IsLoading}"/>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.FooterTemplate>
+
+                <listView:SfListView.Behaviors>
+                    <commonBehavior:SfListViewTapBehavior Command="{Binding Path=BindingContext.ItemSelectedCommand, Source={x:Reference catalogListPage}}" />
+                </listView:SfListView.Behaviors>
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <template:ProductListTemplate ParentBindingContext="{Binding Path=BindingContext, Source={x:Reference catalogListPage}}" />
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+            </listView:SfListView>
+            <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="#b51700" />
+
+            <!--busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+                                       AnimationType="SlicedCircle"
+                                       IsVisible="{Binding IsLoading, Mode=TwoWay}"
+                                       TextColor="Magenta"
+                                       ViewBoxWidth="20"
+                                       ViewBoxHeight="30"/-->
+            
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

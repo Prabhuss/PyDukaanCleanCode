@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PyConsumerApp.Views.Navigation"
+             xmlns:catatlog="clr-namespace:PyConsumerApp.Views.Catalog"
+             xmlns:orders="clr-namespace:PyConsumerApp.Views.History"
+             xmlns:cart="clr-namespace:PyConsumerApp.Views.Bookmarks"
+             xmlns:settings="clr-namespace:PyConsumerApp.Views.Offers"
+             xmlns:profile="clr-namespace:PyConsumerApp.Views.Profile"
+             x:Class="PyConsumerApp.Views.Navigation.BottomNavigationPage"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
+             android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
+             BarBackgroundColor="White"
+             NavigationPage.HasNavigationBar="False">
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    <catatlog:CategoryTilePage Title="Catalog" >
+        <catatlog:CategoryTilePage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                                 Glyph="{StaticResource Category}"
+                                 Size="10"/>
+        </catatlog:CategoryTilePage.IconImageSource>
+    </catatlog:CategoryTilePage>
+    <settings:OffersTilePage Title="Offers">
+        <settings:OffersTilePage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                                 Glyph="{StaticResource Percentage}"
+                                 Size="10"/>
+        </settings:OffersTilePage.IconImageSource>
+    </settings:OffersTilePage>
+    <!--
+    
+    <orders:MyOrdersPage Title="My Orders" >
+        <orders:MyOrdersPage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                                 Glyph="{StaticResource MyOrdersIcon}"
+                                 Size="10"/>
+        </orders:MyOrdersPage.IconImageSource>
+    </orders:MyOrdersPage>
+    
+    -->
+    <profile:ProfilePage Title="Account">
+        <profile:ProfilePage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                                 Glyph="{StaticResource Account}"
+                                 Size="10"/>
+        </profile:ProfilePage.IconImageSource>
+    </profile:ProfilePage>
+    <cart:CartPage Title="Cart" >
+        <cart:CartPage.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource FontIcons}"
+                                 Glyph="{StaticResource Cart}"
+                                 Size="10"/>
+        </cart:CartPage.IconImageSource>
+    </cart:CartPage>
+</TabbedPage>

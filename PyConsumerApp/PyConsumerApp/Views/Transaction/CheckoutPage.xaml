@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="PyConsumerApp.Views.Transaction.CheckoutPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PyConsumerApp.Controls"
+    xmlns:local="clr-namespace:PyConsumerApp.Views.Transaction"
+    xmlns:viewModel="clr-namespace:PyConsumerApp.ViewModels.Transaction"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+	ios:Page.UseSafeArea="true"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    Title="Checkout"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+
+    BackgroundColor="{DynamicResource Gray-100}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout >
+
+                <!--  Title View  -->
+                <controls:TitleView Title="Checkout" BackgroundColor="{DynamicResource Gray-White}">
+                    <controls:TitleView.LeadingView>
+                        <buttons:SfButton
+                            x:Name="backButton"
+                            Command="{Binding BackButtonCommand}"
+                            CommandParameter="{x:Reference backButton}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Back}" />
+                    </controls:TitleView.LeadingView>
+                </controls:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+
+            <ScrollView>
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  ListView for Delivery Addresses -->
+                    <local:DeliveryView Margin="{OnIdiom Phone='0,0,0,0', Tablet='0,24,0,0', Desktop=0}" />
+
+                    <!--  ListView for Payment Modes -->
+                    <local:PaymentView Grid.Row="1" Margin="{OnIdiom Default=0, Tablet='0,24,0,0'}" />
+
+                    <!--  Loyalty Points View 
+                    <local:LoyaltyPointsView Grid.Row="2" Margin="{OnIdiom Phone='0,20,0,0', Tablet='0,24,0,0', Desktop=0}" /> -->
+
+                    <!--  Price Details  -->
+                    <local:PriceDetailView Grid.Row="2" ActionText="PLACE ORDER" />
+
+                    <!--Busy Indicator-->
+                    <busyindicator:SfBusyIndicator Grid.Row="2"  x:Name="busyindicator" IsBusy="{Binding IsBusy}"
+                                       AnimationType="Cupertino" 
+                                       ViewBoxWidth = "100" 
+                                       ViewBoxHeight="100" VerticalOptions="Start" HorizontalOptions="Center"
+                                       TextColor="#b51700" />
+
+                </Grid>
+            </ScrollView>
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

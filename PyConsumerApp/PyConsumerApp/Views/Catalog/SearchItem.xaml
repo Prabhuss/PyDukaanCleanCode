@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:behavior="clr-namespace:PyConsumerApp.Behaviors.Catalog"
+             xmlns:commonBehavior="clr-namespace:PyConsumerApp.Behaviors"
+             xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+             xmlns:template="clr-namespace:PyConsumerApp.Views.Templates"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:controls="clr-namespace:PyConsumerApp.Controls" 
+             xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
+             xmlns:badge="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
+             BackgroundColor="{DynamicResource Gray-White}"
+             Title="Search Item"
+             x:Class="PyConsumerApp.Views.Catalog.SearchItem"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="searchItem">
+    <ContentPage.Behaviors>
+        <behavior:CartBehavior />
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:IntToThicknessConverter x:Key="intToThicknessConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  Title View  -->
+            <controls:TitleView
+                Title="Search"
+                Grid.Row="0"
+                BackgroundColor="{DynamicResource Gray-White}">
+                <controls:TitleView.LeadingView>
+                    <buttons:SfButton
+                        x:Name="backButton"
+                        Command="{Binding Path=BindingContext.BackButtonCommand, Source={x:Reference searchItem}}"
+                        CommandParameter="{x:Reference backButton}"
+                        CornerRadius="4"
+                        Style="{StaticResource IconButtonStyle}"
+                        Text="{StaticResource Back}" />
+                </controls:TitleView.LeadingView>
+                <controls:TitleView.TrailingView>
+                    <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                        <badge:SfBadgeView
+                            Margin="{Binding Path=BindingContext.CartItemCount, Source={x:Reference searchItem}, Converter={x:StaticResource intToThicknessConverter}}"
+                            Padding="0"
+                            BadgeText="{Binding Path=BindingContext.CartItemCount, Source={x:Reference searchItem}, Mode=TwoWay}"
+                            HeightRequest="42"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            WidthRequest="40">
+                            <badge:SfBadgeView.Content>
+                                <buttons:SfButton
+                                    Command="{Binding Path=BindingContext.CardItemCommand, Source={x:Reference SearchLayout}}"
+                                    CornerRadius="4"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    Text="{StaticResource Cart}" />
+                            </badge:SfBadgeView.Content>
+                            <badge:SfBadgeView.BadgeSettings>
+                                <badge:BadgeSetting
+                                    BackgroundColor="{DynamicResource PrimaryColor}"
+                                    BadgeAnimation="None"
+                                    BadgeIcon="None"
+                                    BadgeType="None"
+                                    FontSize="10"
+                                    Stroke="{DynamicResource Gray-White}"
+                                    StrokeWidth="1"
+                                    Offset="-10,10" />
+                            </badge:SfBadgeView.BadgeSettings>
+                        </badge:SfBadgeView>
+                    </StackLayout>
+                </controls:TitleView.TrailingView>
+            </controls:TitleView>
+
+            <StackLayout Grid.Row="1">
+                <!--Search Bar, SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"-->
+                <SearchBar x:Name="SearchBar" SearchCommand="{Binding SearchCommand}" 
+                       Text="{Binding SearchText}"
+                       Placeholder="Search here ..." CancelButtonColor="Red" PlaceholderColor="Gray" FontAttributes="Italic" FontSize="Small"/>
+                <!--If Search Item Not Found in Database-->
+                <Label x:Name="status" Text="No Data found !" TextColor="Gray" FontSize="Small" 
+                   HorizontalOptions="Center" Margin="10"  IsVisible="{Binding IsVisibleStatus}"/>
+            </StackLayout>
+            
+
+            <!--  Cart items  -->
+            <listView:SfListView
+                x:Name="SearchLayout"
+                Grid.Row="2"
+                AllowSwiping="True"
+                BackgroundColor="{OnIdiom Default={StaticResource Transparent},
+                                          Desktop={StaticResource Gray-White},
+                                          Converter={StaticResource DynamicResourceToColorConverter}}"
+                    ItemSize="140"
+                    ItemsSource="{Binding Products}"
+                    SelectionMode="None"
+                    SwipeOffset="88"
+                    VerticalOptions="Start"
+                    LoadMoreOption="AutoOnScroll"
+                    LoadMoreCommand="{Binding LoadMoreItemsCommand}">
+                <listView:SfListView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <ActivityIndicator x:Name="activityIndicator" Color="Red"
+                                               IsVisible="{Binding IsLoading}"
+                                               IsRunning="{Binding IsLoading}"/>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.FooterTemplate>
+
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <template:SearchItemListTemplate ParentBindingContext="{Binding Path=BindingContext, Source={x:Reference searchItem}}" />
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+
+                <listView:SfListView.RightSwipeTemplate>
+                    <DataTemplate x:Name="RightSwipeTemplate">
+                        <Grid
+                            Margin="0,16,0,0"
+                            BackgroundColor="{DynamicResource Red}"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill">
+                            <Label
+                                BackgroundColor="Transparent"
+                                FontFamily="{StaticResource FontIcons}"
+                                FontSize="30"
+                                HorizontalOptions="Center"
+                                Text="{StaticResource Delete}"
+                                TextColor="{DynamicResource Gray-White}"
+                                VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference SearchLayout}}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.RightSwipeTemplate>
+            </listView:SfListView>
+            <ActivityIndicator Grid.Row="2" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="#b51700" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

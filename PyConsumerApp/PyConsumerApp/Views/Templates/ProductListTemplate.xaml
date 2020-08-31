@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="PyConsumerApp.Views.Templates.ProductListTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+    xmlns:helper="clr-namespace:PyConsumerApp.Helpers"
+    xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms" 
+    xmlns:numeric="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms" 
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    x:Name="productListTemplate">
+
+    <Grid.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:MRPtoBoolConverter x:Key="MRPtoBoolConverterKey" />
+            <converter:BooleanToStringConverter x:Key="boolToStringConverter" />
+            <converter:BooleanToColorConverter x:Key="boolToColorConverter" />
+            <converter:AvailabilityToBoolConverter x:Key="availabilityToBoolConverter" />
+            <converter:AvailabilityToButtonColorConverter x:Key="availabilityToButtonColorConverter" />
+        </ResourceDictionary>
+    </Grid.Resources>
+
+    <Grid
+        Margin="0"
+        ColumnSpacing="0"
+        HorizontalOptions="FillAndExpand"
+        RowSpacing="0"
+        VerticalOptions="FillAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Default=Auto, Desktop=0.2*}" />
+            <ColumnDefinition Width="{OnIdiom Default=*, Desktop=*}" />
+            <ColumnDefinition Width="32" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Product Image  -->
+        <Image
+            Grid.RowSpan="4"
+            Aspect="Fill"
+            BackgroundColor="{DynamicResource Gray-F0}"
+            HeightRequest="{OnIdiom Default=100,
+                                    Desktop=120}"
+            WidthRequest="{OnIdiom Default=120,
+                                   Desktop=200}">
+            <Image.Source>
+                <UriImageSource
+                    CacheValidity="14"
+                    CachingEnabled="true"
+                    Uri="{Binding PreviewImage}" />
+            </Image.Source>
+        </Image>
+
+        <!--  Product Name  -->
+        <Label
+            Grid.Column="1"
+            Margin="5,0,0,8"
+            FontFamily="{StaticResource Montserrat-SemiBold}"
+            LineBreakMode="TailTruncation"
+            MaxLines="2"
+            Style="{StaticResource LabelStyle}"
+            Text="{Binding productName}"
+            TextColor="{DynamicResource Gray-900}" />
+
+        <!--  Product Description  -->
+        <StackLayout Grid.Row="1"
+            Grid.Column="1"
+            Margin="5,-10,-10,0"
+            Orientation="Horizontal"
+            Spacing="0">
+            <Label
+                HorizontalOptions="Start"
+            FontFamily="{StaticResource Montserrat-Medium}"
+            FontSize="12"
+            LineBreakMode="TailTruncation"
+            LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+            Style="{StaticResource LabelStyle}"
+            Text="In Stock: " />
+            <Label
+            Margin="0"
+            FontFamily="{StaticResource Montserrat-Medium}"
+            FontSize="12"
+            LineBreakMode="TailTruncation"
+            LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+            Style="{StaticResource LabelStyle}"
+            Text="{Binding Availability_Status}" />
+            
+        </StackLayout>
+        
+        <!--Label
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,0,0,8"
+            FontFamily="{StaticResource Montserrat-Medium}"
+            FontSize="12"
+            LineBreakMode="TailTruncation"
+            LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+            MaxLines="2"
+            Style="{StaticResource LabelStyle}"
+            Text="{Binding Availability_Status}" /-->
+
+        <StackLayout
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0"
+            Orientation="Horizontal"
+            Spacing="2">
+
+            <!--  Product Price  -->
+            <Label
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                Margin="5,-5,0,0"
+                FontSize="20"
+                HorizontalOptions="Start"
+                LineHeight="{OnPlatform Android=1.25,
+                                        Default=-1}"
+                Style="{StaticResource LabelStyle}"
+                Text="{Binding SellingPrice, StringFormat='₹{0:0 }'}"
+                TextColor="{DynamicResource PrimaryColor}"
+                VerticalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" />
+
+            <Label
+                FontFamily="{StaticResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="Start"
+                Style="{StaticResource LabelStyle}"
+                IsVisible="{Binding AnyDiscount}"
+                Text="{Binding mrp, StringFormat='₹{0:0.00}'}"
+                TextDecorations="Strikethrough"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+
+        </StackLayout>
+
+        <!--  Product Quantitiy and add button  -->
+        <StackLayout
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,-10,0,0"
+            Orientation="Horizontal"
+            Spacing="2">
+            <numeric:SfNumericUpDown 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        x:Name="numericUpDown" 
+                        SpinButtonAlignment="Both" 
+                        HeightRequest="50" WidthRequest="108"
+                        FormatString="n"
+                        Value="{Binding TotalQuantity,Mode=TwoWay}"
+                        Maximum="9"
+                        Minimum="1"
+                        StepValue="1"
+                        MaximumDecimalDigits="0"
+                        />
+
+            <Button 
+                        helper:RTLHelper.Margin="{OnIdiom Default='44,0,16,0',Phone='8,0,0,0'}"
+                        Command="{Binding Path=ParentBindingContext.AddToCartCommand, Source={x:Reference productListTemplate}}"
+                        CommandParameter="{Binding .}"
+                        CornerRadius="4"
+                        HeightRequest="32"
+                        Padding="3"
+                        TextColor="White"
+                        WidthRequest="50"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Text="Add"
+                        IsEnabled="{Binding Availability_Status, Converter={StaticResource availabilityToBoolConverter}}"
+                        BackgroundColor="{Binding Availability_Status, Converter={StaticResource availabilityToButtonColorConverter}}" />
+        </StackLayout>
+        <!--rating:SfRating
+            Grid.Row="3"
+            Grid.Column="1"
+            RatingSettings="{StaticResource RatingSettings}"
+            Style="{StaticResource SfRatingStyle}"
+            Value="{Binding OverallRating}" /-->
+        <!--  Separator  -->
+        <BoxView
+                Grid.Row="4"
+            Grid.ColumnSpan="2"
+                HeightRequest="1"
+            Margin="10,5,10,0"
+                BackgroundColor="LightGray"
+            />
+    </Grid>
+</Grid>

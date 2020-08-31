@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PyConsumerApp.Views.History.MyOrdersView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:template="clr-namespace:PyConsumerApp.Views.Templates"
+    mc:Ignorable="d">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:StringToColorConverter x:Key="StringToColorConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+
+    <ContentView.Content>
+
+        <!--  My Order list  -->
+        <listView:SfListView
+            x:Name="myOrderList"
+            AutoFitMode="DynamicHeight"
+            BackgroundColor="{DynamicResource Gray-100}"
+            ItemsSource="{Binding OrderDetails}"
+            SelectionMode="None"
+            TapCommand="{Binding ItemSelectedCommand}"
+            VerticalOptions="Start">
+
+            <listView:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <template:OrderHistoryTemplate />
+                </DataTemplate>
+            </listView:SfListView.ItemTemplate>
+
+        </listView:SfListView>
+    </ContentView.Content>
+</ContentView>

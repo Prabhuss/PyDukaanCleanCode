@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="PyConsumerApp.Views.Transaction.PaymentSuccessPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+	xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+	ios:Page.UseSafeArea="true"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:svg="clr-namespace:PyConsumerApp.Controls"
+    xmlns:viewModel="clr-namespace:PyConsumerApp.ViewModels.Transaction"
+    Title="Payment Success Page"
+    BackgroundColor="{DynamicResource Gray-100}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+            <StackLayout
+                HorizontalOptions="Center"
+                Spacing="0"
+                VerticalOptions="Center">
+
+                <!--  Payment status image  -->
+                <svg:SVGImage
+                    Margin="0,10,0,0"
+                    HeightRequest="80"
+                    Source="{Binding OrderStatusIcon}"
+                    WidthRequest="80" />
+
+                <!--  Payment status label  -->
+                <Label
+                    Margin="0,40,0,0"
+                    Style="{StaticResource LabelStyle}"
+                    Text="{Binding OrderConfirmCaption}" />
+
+                <!--  Payment description label  -->
+                <Label
+                    Margin="17,8"
+                    Style="{StaticResource DescriptionLabelStyle}"
+                    Text="{Binding OrderConfirmMessage}" />
+
+                <border:SfBorder Grid.Row="8" BorderWidth="0" CornerRadius="20" Margin="40,20,40,0">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <gradient:SfGradientView Grid.Row="0"  >
+                            <gradient:SfGradientView.BackgroundBrush>
+                                <gradient:SfLinearGradientBrush>
+                                    <gradient:SfLinearGradientBrush.GradientStops>
+                                        <gradient:SfGradientStop Color="{DynamicResource PrimaryColor}" Offset="0.0" />
+                                        <gradient:SfGradientStop Color="{DynamicResource PrimaryGradient}" Offset="1.0" />
+                                    </gradient:SfLinearGradientBrush.GradientStops>
+                                </gradient:SfLinearGradientBrush>
+                            </gradient:SfGradientView.BackgroundBrush>
+                        </gradient:SfGradientView>
+                        <!--  Login button  -->
+                        <buttons:SfButton
+                                        CornerRadius="20"
+                                        Grid.Row="0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BorderWidth="3"
+                                        BorderColor="Transparent"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        Text="{Binding MainButtonText}"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Command="{Binding ContinueShoppingCommand}"/>
+
+                    </Grid>
+                </border:SfBorder>
+
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
+<!--ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PyConsumerApp.Views.Transaction.PaymentSuccessPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage-->

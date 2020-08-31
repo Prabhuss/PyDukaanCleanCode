@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PyConsumerApp.Views.Forms.PhoneNumberEntry"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:control="clr-namespace:PyConsumerApp.Controls"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+            <converter:ErrorValidationColorConverter x:Key="ErrorValidationColorConverter" PageVariantParameter="0" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <StackLayout>
+            <border:SfBorder BorderColor="{Binding Path=IsFocused, 
+                Source={x:Reference PhoneNumber}, 
+                Converter={x:StaticResource ErrorValidationColorConverter}, 
+                ConverterParameter={x:Reference PhoneNumber}}" 
+                             Style="{StaticResource SfBorderStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Padding="0" Margin="2" HasShadow="True" CornerRadius="25">
+                        <control:BorderlessEntry
+                        x:Name="PhoneNumber"
+                        Placeholder="10 digit mobile number" Keyboard="Numeric"
+                        Style="{StaticResource EntryStyle}"
+                        Text="{Binding PhoneNumber}" />
+                    </Frame>
+                    <Label
+                        Margin="15,0"
+                        FontFamily="{StaticResource FontIcons}"
+                        FontSize="18"
+                        HorizontalOptions="EndAndExpand"
+                        HorizontalTextAlignment="End"
+                        IsVisible="{Binding Path=IsVisible, Source={x:Reference ValidationLabel}}"
+                        Text="&#xe707;"
+                        TextColor="{DynamicResource Red}"
+                        VerticalOptions="Center" />
+
+
+                </Grid>
+            </border:SfBorder>
+
+            <Label
+                x:Name="ValidationLabel"
+                Margin="15,-5,0,0"
+                FontSize="12"
+                IsVisible="{Binding Path=IsFocused, Source={x:Reference PhoneNumber}, 
+                Converter={StaticResource StringToBooleanConverter}, 
+                ConverterParameter={x:Reference PhoneNumber}}"
+                Text="Please enter the valid phone number"
+                TextColor="{DynamicResource Red}"
+                VerticalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

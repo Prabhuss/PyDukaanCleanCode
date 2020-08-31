@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="PyConsumerApp.Views.Navigation.Orders">
+    <sflistview:SfListView x:Name="list1" ItemsSource="{Binding Info}" AutoFitMode="DynamicHeight" >
+        <sflistview:SfListView.ItemTemplate >
+            <DataTemplate>
+                <expander:SfExpander DynamicSizeMode="Content,Header" HeaderIconPosition="None" AnimationDuration="100" BackgroundColor="#FFFFFF" HeaderBackgroundColor="#FFFFFF" IsExpanded="False">
+                    <expander:SfExpander.Header>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="105"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="85"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding Name}" TextColor="#0059a0" FontSize="Small" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Start" HorizontalOptions="Start"></Label>
+                            <Label x:Name="TRY" AutomationId="TRY" Text="{Binding Name}"  FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"></Label>
+                            <Label  x:Name="USD" AutomationId="USD" Text="{Binding Name}"  FontSize="Micro" Grid.Column="2" HorizontalTextAlignment="End"></Label>
+                            <Label x:Name="EUR" AutomationId="EUR" Text="{Binding Name}" FontSize="Micro" Grid.Column="3" HorizontalTextAlignment="End"></Label>
+                            <Label x:Name="GBP" AutomationId="GBP" Text="{Binding Name}"  FontSize="Micro" Grid.Column="4" HorizontalTextAlignment="End"></Label>
+                            <Label x:Name="CAD" AutomationId="CAD" Text="{Binding Name}" FontSize="Micro" Grid.Column="5" HorizontalTextAlignment="End"></Label>
+                            <Label x:Name="CHF" AutomationId="CHF" Text="{Binding Name}" FontSize="Micro" Grid.Column="6" HorizontalTextAlignment="End"></Label>
+                        </Grid>
+                    </expander:SfExpander.Header>
+                    <expander:SfExpander.Content>
+                        <sflistview:SfListView ItemsSource="{Binding Idinfo}" x:Name="list2" >
+                            <sflistview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="10,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="105"/>
+                                            <ColumnDefinition Width="85"/>
+                                            <ColumnDefinition Width="85"/>
+                                            <ColumnDefinition Width="85"/>
+                                            <ColumnDefinition Width="85"/>
+                                            <ColumnDefinition Width="85"/>
+                                            <ColumnDefinition Width="85"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding Idno}" TextColor="#dd380d" FontSize="Small" FontAttributes="Bold" Grid.Column="0" HorizontalTextAlignment="Start" HorizontalOptions="Start"></Label>
+                                        <Label x:Name="TRY" AutomationId="TRY" Text="{Binding Idno}"  FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"></Label>
+                                        <Label  x:Name="USD" AutomationId="USD" Text="{Binding Idno}"  FontSize="Micro" Grid.Column="2" HorizontalTextAlignment="End"></Label>
+                                        <Label x:Name="EUR" AutomationId="EUR" Text="{Binding Idno}" FontSize="Micro" Grid.Column="3" HorizontalTextAlignment="End"></Label>
+                                        <Label x:Name="GBP" AutomationId="GBP" Text="{Binding Idno}"  FontSize="Micro" Grid.Column="4" HorizontalTextAlignment="End"></Label>
+                                        <Label x:Name="CAD" AutomationId="CAD" Text="{Binding Idno}" FontSize="Micro" Grid.Column="5" HorizontalTextAlignment="End"></Label>
+                                        <Label x:Name="CHF" AutomationId="CHF" Text="{Binding Idno}" FontSize="Micro" Grid.Column="6" HorizontalTextAlignment="End"></Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </sflistview:SfListView.ItemTemplate>
+                        </sflistview:SfListView>
+                    </expander:SfExpander.Content>
+                </expander:SfExpander>
+            </DataTemplate>
+        </sflistview:SfListView.ItemTemplate>
+    </sflistview:SfListView>
+
+</ContentPage>

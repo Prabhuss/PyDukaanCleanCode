@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PyConsumerApp.Views.Forms.OTPView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:control="clr-namespace:PyConsumerApp.Controls"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+    xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:PyConsumerApp.Views.Forms"
+    xmlns:viewModel="clr-namespace:PyConsumerApp.ViewModels.Forms"
+    NavigationPage.HasNavigationBar="False"
+    Style="{StaticResource ContentPageStyle}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+            <converter:OTPValidationColorConverter x:Key="OTPValidationColorConverter" PageVariantParameter="0" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Frame VerticalOptions="Start" Padding="0">
+                <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
+            </Frame>
+            <Frame Padding="20" Grid.Row="0" BackgroundColor="White" HasShadow="True" CornerRadius="150" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Margin="0,0,0,-40"  >
+                <Image Source="msg.png" HeightRequest="50" WidthRequest="50" />
+            </Frame>
+            <ScrollView Grid.Row="1" HorizontalOptions="Center">
+                <ScrollView.VerticalOptions>
+                    <OnIdiom x:TypeArguments="LayoutOptions" Default="CenterAndExpand" Phone="FillAndExpand" />
+                </ScrollView.VerticalOptions>
+                <StackLayout
+                    Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                                 PhoneLandscape='150,32',
+                                                                 TabletPortrait='200,50',
+                                                                 TabletLandscape='300,50',
+                                                                 Desktop='30'}"
+                    Spacing="0"
+                    VerticalOptions="FillAndExpand"
+                    WidthRequest="{OnPlatform Default='-1',
+                                              UWP='350'}">
+                    <BoxView HeightRequest="15"></BoxView>
+                    <Grid RowSpacing="0" VerticalOptions="StartAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--  Label to display the title of this page  -->
+                        <Label
+                            FontFamily="{StaticResource Montserrat-SemiBold}"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            TextColor="Black"
+                            Text="OTP Verification" />
+
+                        <!--  Label to display the description of this page  -->
+                        <Label 
+                            Grid.Row="1"
+                            Margin="0,8"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            HorizontalTextAlignment="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="OTP has been sent to "  />
+                                        <Span Text="{Binding OtpCaption,StringFormat='+91 {0}'}" ForegroundColor="#b51700" />
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <ActivityIndicator Grid.Row="1" x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="Center" Color="#b51700" />
+
+                        <!--  Entry to get email ID from user  -->
+                        <!--local:OTPEntry Grid.Row="2" Padding="0,24" /-->
+
+                        <StackLayout Grid.Row="2" Padding="0,24">
+                            <border:SfBorder
+                                Style="{StaticResource SfBorderStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Padding="0" Margin="2" HasShadow="True" CornerRadius="25">
+                                        <control:BorderlessEntry
+                                        x:Name="OTP"
+                                        Placeholder="6 digit OTP" Keyboard="Numeric"
+                                        Style="{StaticResource EntryStyle}"
+                                        Text="{Binding OTP}" />
+                                    </Frame>
+
+                                    <Label
+                                        Margin="15,0"
+                                        FontFamily="{StaticResource FontIcons}"
+                                        FontSize="18"
+                                        HorizontalOptions="EndAndExpand"
+                                        HorizontalTextAlignment="End"
+                                        IsVisible="{Binding Path=IsVisible, Source={x:Reference ValidationLabel}}"
+                                        Text="&#xe707;"
+                                        TextColor="{DynamicResource Red}"
+                                        VerticalOptions="Center" />
+
+
+                                </Grid>
+                            </border:SfBorder>
+                            <Label
+                                    x:Name="ValidationLabel"
+                                    Margin="15,-5,0,0"
+                                    FontSize="12"
+                                    IsVisible="{Binding IsInvalidOtp}"
+                                    Text="{Binding InvalidError}"
+                                    TextColor="{DynamicResource Red}"
+                                    VerticalOptions="FillAndExpand" />
+
+                        </StackLayout>
+                        <!-- OLD Login button  -->
+                        <!--
+                        <buttons:SfButton
+                            Grid.Row="5"
+                            Margin="0,16"
+                            Command="{Binding OtpCommand}"
+                            Style="{StaticResource SfButtonStyle}"
+                            Text="VERIFY" />
+                        -->
+
+                        <border:SfBorder Grid.Row="8" BorderWidth="0" CornerRadius="20">
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <gradient:SfGradientView Grid.Row="0"  >
+                                    <gradient:SfGradientView.BackgroundBrush>
+                                        <gradient:SfLinearGradientBrush>
+                                            <gradient:SfLinearGradientBrush.GradientStops>
+                                                <gradient:SfGradientStop Color="{DynamicResource PrimaryColor}" Offset="0.0" />
+                                                <gradient:SfGradientStop Color="{DynamicResource PrimaryGradient}" Offset="1.0" />
+                                            </gradient:SfLinearGradientBrush.GradientStops>
+                                        </gradient:SfLinearGradientBrush>
+                                    </gradient:SfGradientView.BackgroundBrush>
+                                </gradient:SfGradientView>
+                                <!--  Login button  -->
+                                <buttons:SfButton
+                                        CornerRadius="20"
+                                        Grid.Row="0"
+                                        Margin="0,0,0,0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BorderWidth="3"
+                                        BorderColor="Transparent"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Text="VERIFY" 
+                                        Command="{Binding OtpCommand}"/>
+                            </Grid>
+                        </border:SfBorder>
+
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

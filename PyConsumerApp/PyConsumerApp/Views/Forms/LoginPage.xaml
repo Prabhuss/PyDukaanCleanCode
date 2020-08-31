@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PyConsumerApp.Views.Forms.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:control="clr-namespace:PyConsumerApp.Controls"
+    xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+    xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:PyConsumerApp.Views.Forms"
+    xmlns:viewModel="clr-namespace:PyConsumerApp.ViewModels.Forms"
+    NavigationPage.HasNavigationBar="False"
+    Style="{StaticResource ContentPageStyle}">
+   
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--  Binding context for login page  -->
+    <!--ContentPage.BindingContext>
+        <viewModel:LoginPageViewModel Navigation="{Binding}"/>
+    </-->
+
+    <ContentPage.Content>
+        <Grid>
+            <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
+
+            <ScrollView HorizontalOptions="Center">
+                <ScrollView.VerticalOptions>
+                    <OnIdiom
+                        x:TypeArguments="LayoutOptions"
+                        Default="CenterAndExpand"
+                        Phone="FillAndExpand" />
+                </ScrollView.VerticalOptions>
+
+                <Frame Grid.Row="0" 
+                       Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                                 PhoneLandscape='150,32',
+                                                                 TabletPortrait='200,50',
+                                                                 TabletLandscape='300,50',
+                                                                 Desktop='30'}"
+                    VerticalOptions="CenterAndExpand"
+                    WidthRequest="{OnPlatform Default='-1',
+                                              UWP='350'}"
+                       HasShadow="True" HorizontalOptions="Start" BackgroundColor="White" CornerRadius="15">
+                    <StackLayout Spacing="0">
+
+                       <Grid RowSpacing="0" VerticalOptions="CenterAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <!--  Label to display the title of this page  -->
+                            <Frame Padding="0" Margin="5" HasShadow="True" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="20" >
+                                <Image Source="LogInIcon.png"  HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Frame>
+
+                            <BoxView Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="Center" Margin="5" HeightRequest="30" WidthRequest="50" Color="Transparent"></BoxView>
+                            <Label Grid.Row="2"
+                            FontFamily="{StaticResource Montserrat-SemiBold}"
+                            FontSize="20"
+                            TextColor="Black"
+                            HorizontalTextAlignment="Center"
+                            Text="Log In" />
+                            <ActivityIndicator Grid.Row="5" x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="Center" Color="#b51700" />
+
+                            <!--  Label to display the description of this page  -->
+                            <Label
+                            Grid.Row="3"
+                            Margin="0,8"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            HorizontalTextAlignment="Center"
+                            Text="Enter your phone number" />
+
+                            <BoxView Grid.Row="4"  VerticalOptions="Center" HorizontalOptions="Center" Margin="5" HeightRequest="2" WidthRequest="50" Color="#5b5d68"></BoxView>
+                            <!--  Entry to get email ID from user  -->
+                            <BoxView Grid.Row="5"  VerticalOptions="Center" HorizontalOptions="Center" Margin="5" HeightRequest="30" WidthRequest="50" Color="Transparent"></BoxView>
+
+                            <local:PhoneNumberEntry Grid.Row="6" Padding="0,24" />
+
+                            <border:SfBorder Grid.Row="8" BorderWidth="0" CornerRadius="20">
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <gradient:SfGradientView Grid.Row="0"  >
+                                        <gradient:SfGradientView.BackgroundBrush>
+                                            <gradient:SfLinearGradientBrush>
+                                                <gradient:SfLinearGradientBrush.GradientStops>
+                                                    <gradient:SfGradientStop Color="{DynamicResource PrimaryColor}" Offset="0.0" />
+                                                    <gradient:SfGradientStop Color="{DynamicResource PrimaryGradient}" Offset="1.0" />
+                                                </gradient:SfLinearGradientBrush.GradientStops>
+                                            </gradient:SfLinearGradientBrush>
+                                        </gradient:SfGradientView.BackgroundBrush>
+                                    </gradient:SfGradientView>
+                                    <!--  Login button  -->
+                                    <buttons:SfButton
+                                        CornerRadius="20"
+                                        Grid.Row="0"
+                                        Margin="0,0,0,0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BorderWidth="3"
+                                        BorderColor="Transparent"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        Text="SEND OTP" 
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Command="{Binding LoginCommand}"/>
+
+                                </Grid>
+                            </border:SfBorder>
+
+
+                        </Grid>
+                       <BoxView Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="Center" Margin="5" HeightRequest="30" WidthRequest="50" Color="Transparent"></BoxView>
+                        
+                    </StackLayout>
+                </Frame>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

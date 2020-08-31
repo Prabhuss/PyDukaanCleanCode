@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:cards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
+             xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+             xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:svg="clr-namespace:PyConsumerApp.Controls"
+             xmlns:viewModel="clr-namespace:PyConsumerApp.ViewModels.Profile" 
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             x:Class="PyConsumerApp.Views.Profile.ProfilePage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Spacing="0" BackgroundColor="White">
+                <!--  Title View  -->
+                <svg:TitleView Title=" MY Account" BackgroundColor="{DynamicResource Gray-White} ">
+                    <!--
+                    
+                    <svg:TitleView.LeadingView>
+                        <buttons:SfButton
+                            x:Name="backButton"
+                            Command="{TemplateBinding BindingContext.BackButtonCommand }"
+                            CommandParameter="{x:Reference backButton}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Back}" />
+                    </svg:TitleView.LeadingView/>
+                    <svg:TitleView.TrailingView>
+                        <buttons:SfButton
+                            x:Name="editButton"
+                            Command="{TemplateBinding BindingContext.EditProfileCommand }"
+                            CommandParameter="{x:Reference editButton}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Edit}" />
+                    </svg:TitleView.TrailingView>
+                    
+                    -->
+                </svg:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+
+    <!--  Binding context for Profile Page  -->
+    <ContentPage.BindingContext>
+        <viewModel:ProfileViewModel />
+    </ContentPage.BindingContext>
+
+    <!--ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Spacing="0">
+                <svg:TitleView Title="My Account" BackgroundColor="{DynamicResource Gray-White} ">
+                    <svg:TitleView.LeadingView>
+                        <buttons:SfButton
+                            x:Name="backButton"
+                            Command="{TemplateBinding BindingContext.BackButtonCommand}"
+                            CommandParameter="{x:Reference backButton}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Edit}" />
+                    </svg:TitleView.LeadingView>
+                    <svg:TitleView.TrailingView>
+                        <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                            <buttons:SfButton
+                                x:Name="editButton"
+                            Command="{Binding editCommand}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Edit}" />
+                        </StackLayout>
+                    </svg:TitleView.TrailingView>
+                </svg:TitleView>
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate-->
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="Fill" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0" Padding="0,0,0,50">
+                <StackLayout  >
+
+                <!--border:SfBorder Grid.Row="1" Margin="0,-69,0,0" Padding="0,61,0,0" BackgroundColor="{DynamicResource Gray-100}" CornerRadius="14,14,0,0"
+                                 VerticalOptions="Start" BorderWidth="0">
+                    <listView:SfListView SelectionMode="None" ItemSpacing="16,8" ItemSize="74" IsScrollingEnabled="False" AutoFitMode="Height"
+                                         ItemsSource="{Binding CardItems}">
+                        <listView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <cards:SfCardView CornerRadius="4" BorderWidth="0" HasShadow="True" WidthRequest="{OnIdiom Phone=343, Default=736}"
+                                                  HorizontalOptions="CenterAndExpand" BackgroundColor="{DynamicResource Gray-White}">
+                                    <Grid RowSpacing="0" Padding="16">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="{Binding CategoryValue}" Style="{StaticResource LabelStyle}" />
+
+                                        <Label Grid.Row="1" FontSize="12" Style="{StaticResource LabelStyle}" 
+                                               FontFamily="{DynamicResource Montserrat-Medium}" 
+                                               TextColor="{DynamicResource Gray-700}" HeightRequest="18" Text="{Binding Category}" />
+
+                                        <svg:SVGImage Grid.RowSpan="2" 
+                                                      BackgroundColor="Transparent"
+                                                      Source="{Binding ImagePath}"
+                                                      HorizontalOptions="End"
+                                                      VerticalOptions="Center"
+                                                      WidthRequest="32" 
+                                                      HeightRequest="31" />
+
+                                    </Grid>
+                                </cards:SfCardView>
+                            </DataTemplate>
+                        </listView:SfListView.ItemTemplate>
+                    </listView:SfListView>
+                </border:SfBorder-->
+                <Grid VerticalOptions="Start">
+
+                    <gradient:SfGradientView>
+                        <gradient:SfGradientView.BackgroundBrush>
+                            <gradient:SfLinearGradientBrush>
+                                <gradient:SfLinearGradientBrush.GradientStops>
+                                    <!--Color="{StaticResource Deep-Purple}" -->
+                                    <gradient:SfGradientStop Color="White" Offset="0.0"/>
+                                    <gradient:SfGradientStop Color="Gray" Offset="1.0"/>
+                                    <!--Color="{StaticResource Dull-Red}"" -->
+                                </gradient:SfLinearGradientBrush.GradientStops>
+                            </gradient:SfLinearGradientBrush>
+                        </gradient:SfGradientView.BackgroundBrush>
+                    </gradient:SfGradientView>
+
+                    <cards:SfCardView Grid.Row="0" CornerRadius="4" VerticalOptions="End" Margin="20"  BorderWidth="0" HasShadow="True"  
+                                 BackgroundColor="{DynamicResource Gray-White}" HorizontalOptions="CenterAndExpand" WidthRequest="{OnIdiom Phone=343, Default=736}" >
+
+                        <Grid RowSpacing="0" ColumnSpacing="0" WidthRequest="{OnIdiom Phone=343, Default=480}" 
+                          HeightRequest="100">
+
+                            <Label Text="Registered Number"
+                           Margin="0,35,0,0"
+                           FontFamily="{DynamicResource Montserrat-Medium}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand"
+                           FontSize="12"/>
+                            <!-- Mobile Number -->
+                            <Label Grid.Row="1"
+                           Margin="0,0,0,20"
+                           Text="{Binding Profile.PrimaryPhone, StringFormat='+91-{0}'}"
+                           TextColor="Black"
+                           FontSize="25"
+                           FontFamily="{DynamicResource Montserrat-SemiBold}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand" />
+
+                            <!-- full name 
+                            <Label Grid.Row="2"
+                           TextColor="{DynamicResource Gray-White}"
+                           FontSize="12"
+                           FontFamily="{DynamicResource Montserrat-Medium}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand"
+                           LineHeight="{OnPlatform Android=1.5, Default=-1}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Profile.FirstName}" />
+                                        <Span Text=" "/>
+                                        <Span Text="{Binding Profile.LastName} "/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label> -->
+                        </Grid>
+                    </cards:SfCardView>
+
+
+                </Grid>
+                <!-- OLD LOGOUT Button-->
+                <!--
+                <buttons:SfButton
+                    Grid.Row="1"
+                    Margin="0,24,0,32"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    BorderColor="{DynamicResource PrimaryColor}"
+                    BorderWidth="1"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource RoundButtonStyle}"
+                    Text="LOG OUT"
+                    Command="{Binding LogOutCommand}"
+                    TextColor="{DynamicResource Gray-White}"
+                    WidthRequest="245" />
+                -->
+
+                <!-- User Info GridLayout -->
+                <Grid RowSpacing="0">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding AskEditProfileCommand }" CommandParameter="{Binding .}" />
+                    </Grid.GestureRecognizers>
+                    <!-- User Name-->
+                    <Grid Margin="20,10,20,5"
+                    Grid.Row="0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        TextColor="{DynamicResource HyperLink}"
+                        Text="Name"/>
+                        <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Profile.FirstName}" />
+                                    <Span Text=" "/>
+                                    <Span Text="{Binding Profile.LastName} "/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <BoxView
+                            Grid.Row="2"
+                            Margin="0,5,0,0"
+                            HeightRequest="1"
+                            Style="{StaticResource BoxViewStyle}" />
+                    </Grid>
+
+                    <!-- Secondary Number-->
+                    <Grid Margin="20,10,20,5"
+                    Grid.Row="1" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        TextColor="{DynamicResource HyperLink}"
+                        Text="Secondary Number"/>
+                        <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="{Binding Profile.SecondaryPhone} "/>
+                        <BoxView
+                            Grid.Row="2"
+                            Margin="0,5,0,0"
+                            HeightRequest="1"
+                            Style="{StaticResource BoxViewStyle}" />
+                    </Grid>
+
+
+                    <!-- E-Mail ID -->
+                    <Grid Margin="20,10,20,5"
+                    Grid.Row="2" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        TextColor="{DynamicResource HyperLink}"
+                        Text="E-Mail ID"/>
+                        <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="{Binding Profile.Email} "/>
+                        <BoxView
+                            Grid.Row="2"
+                            Margin="0,5,0,0"
+                            HeightRequest="1"
+                            Style="{StaticResource BoxViewStyle}" />
+                    </Grid>
+
+                    <!-- City And State Grid-->
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- City Grid-->
+                        <Grid Margin="20,10,20,5" 
+                              Grid.Column="0"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        TextColor="{DynamicResource HyperLink}"
+                        Text="City"/>
+                            <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="{Binding Profile.City} "/>
+                            <BoxView
+                            Grid.Row="2"
+                            Margin="0,5,0,0"
+                            HeightRequest="1"
+                            Style="{StaticResource BoxViewStyle}" />
+                        </Grid>
+
+                        <!-- State Grid-->
+                        <Grid Margin="20,10,20,5"
+                              Grid.Column="1"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        TextColor="{DynamicResource HyperLink}"
+                        Text="State"/>
+                            <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="{Binding Profile.State} "/>
+                            <BoxView
+                            Grid.Row="2"
+                            Margin="0,5,0,0"
+                            HeightRequest="1"
+                            Style="{StaticResource BoxViewStyle}" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <!-- Loyalty Points 
+                <BoxView
+                Grid.Row="1"
+                Margin="0"
+                HeightRequest="1"
+                Style="{StaticResource BoxViewStyle}" />
+                <Grid Margin="20,10,20,10"
+                    Grid.Row="2">
+                    <Label
+                        Grid.Column="0"
+                        HorizontalOptions="Start"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="Total Loyality Points"/>
+                    <Label
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Green}"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        Text="{Binding Profile.TotalLoyaltyPoints}"/>
+                </Grid>
+                <BoxView
+                Grid.Row="2"
+                    Margin="0"
+                HeightRequest="1"
+                Style="{StaticResource BoxViewStyle}" />   -->
+
+
+                <!--Edit Profile Button-->
+                <border:SfBorder Grid.Row="3" BorderWidth="1" BorderColor="{DynamicResource PrimaryColor}" HorizontalOptions="FillAndExpand" Margin="10,5,10,5" CornerRadius="4" >
+                    <Grid
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White"
+                            ColumnSpacing="0"
+                            Grid.Row="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                            Command="{Binding EditProfileCommand }" CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <buttons:SfButton
+                            IsEnabled="False"
+                            x:Name="editButton"
+                            CornerRadius="4"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            Style="{StaticResource IconButtonStyle}"
+                            FontAttributes="Bold"
+                            Text="{StaticResource Edit}" />
+                        <buttons:SfButton
+                            IsEnabled="False"
+                                Grid.Column="1"
+                                        Padding="0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Text="Edit Profile"
+                                        Command="{TemplateBinding BindingContext.EditProfileCommand }"
+                                        CommandParameter="{x:Reference editButton}"/>
+
+                        <buttons:SfButton
+                            IsEnabled="False"
+                                Grid.Column="2"
+                            Command="{TemplateBinding BindingContext.EditProfileCommand }"
+                            CommandParameter="{x:Reference editButton}"
+                            CornerRadius="4"
+                                HorizontalOptions="End"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Next}" />
+                    </Grid>
+                </border:SfBorder>
+
+
+                <!--My Orders Button-->
+                <border:SfBorder Grid.Row="3" BorderWidth="1" BorderColor="{DynamicResource PrimaryColor}" HorizontalOptions="FillAndExpand" Margin="10,5,10,5" CornerRadius="4" >
+                    <Grid
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="White"
+                            ColumnSpacing="0"
+                            Grid.Row="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                            Command="{Binding MyOrdersCommand }" CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                        <buttons:SfButton
+                            IsEnabled="False"
+                            CornerRadius="4"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            Style="{StaticResource IconButtonStyle}"
+                            FontAttributes="Bold"
+                            Text="{StaticResource MyOrdersIcon}" />
+                        <buttons:SfButton
+                            IsEnabled="False"
+                                Grid.Column="1"
+                                        Padding="0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Text="My Orders"/>
+
+                        <buttons:SfButton
+                            IsEnabled="False"
+                                Grid.Column="2"
+                            CornerRadius="4"
+                                HorizontalOptions="End"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Next}" />
+                    </Grid>
+                </border:SfBorder>
+                <border:SfBorder Grid.Row="3" BorderWidth="0" HorizontalOptions="Center" Margin="0,24,0,0" WidthRequest="220" CornerRadius="20" >
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <gradient:SfGradientView Grid.Row="0"  >
+                            <gradient:SfGradientView.BackgroundBrush>
+                                <gradient:SfLinearGradientBrush>
+                                    <gradient:SfLinearGradientBrush.GradientStops>
+                                        <gradient:SfGradientStop Color="{DynamicResource PrimaryColor}" Offset="0.0" />
+                                        <gradient:SfGradientStop Color="{DynamicResource PrimaryGradient}" Offset="1.0" />
+                                    </gradient:SfLinearGradientBrush.GradientStops>
+                                </gradient:SfLinearGradientBrush>
+                            </gradient:SfGradientView.BackgroundBrush>
+                        </gradient:SfGradientView>
+                        <!--  LogOut button  -->
+                        <buttons:SfButton
+                                        CornerRadius="20"
+                                        Grid.Row="0"
+                                        Padding="0"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        BorderWidth="3"
+                                        BorderColor="Transparent"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Text="LOG OUT"
+                                        Command="{Binding LogOutCommand}"/>
+                    </Grid>
+                </border:SfBorder>
+                </StackLayout>
+        </ScrollView>
+            <StackLayout Grid.Row="1" Margin="0,10,5,10" Spacing="0" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="©Copyright 2020 GetPY Analytics Pvt Ltd. All rights reserved." 
+                    FontSize="Micro"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"/>
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="{Binding TnCTitle}" 
+                    FontSize="Small"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    TextColor="{DynamicResource HyperLink}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding RedirectToMerchantUrl }" CommandParameter="{Binding .}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

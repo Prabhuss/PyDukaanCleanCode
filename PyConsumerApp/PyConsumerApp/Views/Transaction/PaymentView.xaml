@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    x:Class="PyConsumerApp.Views.Transaction.PaymentView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helper="clr-namespace:PyConsumerApp.Helpers"
+    xmlns:behavior="clr-namespace:PyConsumerApp.Behaviors"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    x:Name="paymentView"
+    BackgroundColor="{DynamicResource Gray-White}">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  Template for Saved card payment mode  -->
+            <!--DataTemplate x:Key="CardTemplate">
+                <Grid ColumnSpacing="0" RowSpacing="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition x:Name="cvvRow" Height="Auto" />
+                        <RowDefinition Height="16" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <buttons:SfRadioButton
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Margin="8,12,8,2"
+                        GroupKey="{StaticResource PaymentOptionGroup}"
+                        HeightRequest="20"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource RadioButtonStyle}"
+                        Text="{Binding PaymentMode}" />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        templateSelector:RTLHelper.Margin="42,0,0,0"
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        FontSize="12"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding CardNumber}"
+                        TextColor="{DynamicResource Gray-700}" />
+
+                    <border:SfBorder
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Padding="{OnPlatform Default='12,0',
+                                             iOS='12,8'}"
+                        templateSelector:RTLHelper.Margin="42,8,16,0"
+                        BorderColor="{DynamicResource Gray-300}"
+                        CornerRadius="4">
+                        <control:BorderlessEntry
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="16"
+                            HeightRequest="{OnPlatform Default=40,
+                                                       iOS=-1}"
+                            HorizontalOptions="Start"
+                            IsPassword="True"
+                            Keyboard="Numeric"
+                            MaxLength="3"
+                            Placeholder="CVV"
+                            PlaceholderColor="{DynamicResource Gray-700}"
+                            TextColor="{DynamicResource Gray-700}"
+                            WidthRequest="100">
+                            <control:BorderlessEntry.Behaviors>
+                                <behavior:BorderlessEntryCVVBehavior />
+                            </control:BorderlessEntry.Behaviors>
+                        </control:BorderlessEntry>
+
+                    </border:SfBorder>
+
+                    <Image
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,0,0,0"
+                        HeightRequest="45"
+                        HorizontalOptions="StartAndExpand"
+                        Source="Card.png"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="45" />
+
+                    <BoxView
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        HeightRequest="1"
+                        Style="{StaticResource BoxViewStyle}"
+                        VerticalOptions="End" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BindingContext.PaymentOptionCommand, Source={x:Reference paymentView}}"
+                            CommandParameter="{x:Reference cvvRow}" />
+                    </Grid.GestureRecognizers>
+
+                </Grid>
+            </DataTemplate-->
+
+            <!--  Template for other payment mode  -->
+            <!--DataTemplate x:Key="CommonTemplate">
+                <Grid ColumnSpacing="0" RowSpacing="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="16" />
+                    </Grid.RowDefinitions>
+
+                    <buttons:SfRadioButton
+                        Grid.Row="0"
+                        Margin="8,12,8,0"
+                        GroupKey="{StaticResource PaymentOptionGroup}"
+                        HeightRequest="20"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource RadioButtonStyle}"
+                        Text="{Binding PaymentMode}" />
+
+                    <BoxView
+                        Grid.Row="1"
+                        HeightRequest="1"
+                        Style="{StaticResource BoxViewStyle}"
+                        VerticalOptions="End" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BindingContext.PaymentOptionCommand, Source={x:Reference paymentView}}" />
+                    </Grid.GestureRecognizers>
+
+                </Grid>
+            </DataTemplate-->
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <StackLayout
+        BackgroundColor="{DynamicResource Gray-White}"
+        Spacing="0"
+        VerticalOptions="Start">
+
+        <!--  Header  -->
+        <Label
+            Margin="16"
+            FontFamily="{StaticResource Montserrat-SemiBold}"
+            FontSize="16"
+            LineHeight="{OnPlatform Android=1.25,
+                                    Default=-1}"
+            Style="{StaticResource PriceLabelStyle}"
+            Text="Payment Option"
+            TextColor="{DynamicResource Gray-900}" />
+
+        <!--  Separator  -->
+        <BoxView HeightRequest="1" Style="{StaticResource BoxViewStyle}" />
+
+        <!--  Payment modes  -->
+        <buttons:SfRadioGroup x:Name="radioGroup" BindableLayout.ItemsSource="{Binding PaymentModes}" >
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <buttons:SfRadioButton x:Name="radioButton" Margin="16,0,0,0" VerticalOptions="Center" Text="{Binding PaymentMode}"
+                                Style="{StaticResource SfRadioButtonStyle}">
+                        <buttons:SfRadioButton.Behaviors>
+                            <behavior:EventToCommandBehavior
+                                             EventName="StateChanged"
+                                             Command="{Binding  Path=BindingContext.StateChangedCommand, Source={x:Reference paymentView}}"
+                                             CommandParameter="{x:Reference radioButton}"/>
+                        </buttons:SfRadioButton.Behaviors>
+                    </buttons:SfRadioButton>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </buttons:SfRadioGroup>
+        
+        <!--  Address  -->
+        <Label
+                helper:RTLHelper.Margin="{OnIdiom Desktop='16,16,8,0',
+                                                    Tablet='16,0,0,0',
+                                                    Phone='20,0,20,5'}"
+                Grid.Row="1"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="StartAndExpand"
+                Text="{Binding PaymentMessage}"/>
+
+        <!--buttons:SfRadioGroup x:Name="radioGroup" HorizontalOptions="Start" Margin="8,0,8,0">
+                        <buttons:SfRadioButton x:Name="PWC" Text="Pay With Cashfree" StateChanged="PWC_StateChanged" />
+                        <buttons:SfRadioButton x:Name="COD" Text="COD" StateChanged="PWC_StateChanged"/>
+        </buttons:SfRadioGroup-->
+        <!--buttons:SfRadioGroup BindableLayout.ItemsSource="{Binding PaymentModes}" Spacing="0">
+            <BindableLayout.ItemTemplateSelector>
+                <templateSelector:PaymentTemplateSelector CardTemplate="{StaticResource CardTemplate}"
+                                                          CommonTemplate="{StaticResource CommonTemplate}" />
+            </BindableLayout.ItemTemplateSelector>
+        </buttons:SfRadioGroup-->
+
+    </StackLayout>
+
+</ContentView>
+<!--ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PyConsumerApp.Views.Transaction.PaymentView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage-->

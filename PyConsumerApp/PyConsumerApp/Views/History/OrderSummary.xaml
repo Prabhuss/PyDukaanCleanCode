@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converter="clr-namespace:PyConsumerApp.Converters"
+             xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             mc:Ignorable="d"
+            xmlns:controls="clr-namespace:PyConsumerApp.Controls"
+            xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+            NavigationPage.HasNavigationBar="False"
+             x:Class="PyConsumerApp.Views.History.OrderSummary">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Transparent">Transparent</Color>
+            <x:String x:Key="DropDownButtonIcon">&#xe70b;</x:String>
+            <x:String x:Key="Cart">&#xe708;</x:String>
+            <x:String x:Key="Delete">&#xe716;</x:String>
+            <x:String x:Key="Back">&#xe709;</x:String>
+
+            <converter:DynamicResourceToColorConverter x:Key="DynamicResourceToColorConverter" />
+
+            <!--  Common style for BoxView  -->
+            <Style x:Key="BoxViewStyle"  TargetType="BoxView">
+                <Setter Property="Color" Value="{DynamicResource Gray-200}" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <!--  Common style for price labels  -->
+            <Style
+        x:Key="PriceLabelStyle"
+        TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="Margin" Value="16,0" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+            <!--  Common style for icon buttons  -->
+            <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+                <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="40" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Spacing="0">
+                <controls:TitleView Title="Order Summary" BackgroundColor="{DynamicResource Gray-White} ">
+                    <controls:TitleView.LeadingView>
+                        <buttons:SfButton
+                            x:Name="backButton"
+                            Command="{TemplateBinding BindingContext.BackButtonCommand}"
+                            CommandParameter="{x:Reference backButton}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Back}" />
+                    </controls:TitleView.LeadingView>
+                </controls:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="{DynamicResource Gray-White}"
+            VerticalOptions="Start">
+
+                <!--  Header  -->
+                <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="16,16,16,12"
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="16"
+                LineHeight="{OnPlatform Android=1.25,
+                                        Default=-1}"
+                Text="Order Details"
+                TextColor="{DynamicResource Gray-900}" />
+                <!--  Separator  -->
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    HeightRequest="1"
+                    Style="{StaticResource BoxViewStyle}" />
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Total Items  -->
+                <Label
+                    HorizontalOptions="Start"
+                    Grid.Row="2"
+                    Margin="16,3,16,0"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    Style="{StaticResource PriceLabelStyle}"
+                    Text="Total Items" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="16,3,16,0"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    HorizontalOptions="EndAndExpand"
+                    HorizontalTextAlignment="End"
+                    Style="{StaticResource PriceLabelStyle}"
+                    Text="{Binding TotalItems, StringFormat='{0}'}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Total MRP  -->
+                <Label
+                Grid.Row="3"
+                Margin="16,3,16,0"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Total MRP" />
+                <Label
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="16,3,16,0"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding TotalMRP, StringFormat='Rs. {0}'}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Discount Percent  -->
+                <Label
+                Grid.Row="4"
+                Margin="16,3,16,0"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Discount" />
+                <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="16,3,16,0"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding Discount, StringFormat='{}{0}%'}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Delivery Charges  -->
+                <Label
+                Grid.Row="5"
+                Margin="16,3,16,0"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Delivery Charges" />
+                <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="16,3,16,0"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Free"
+                TextColor="{DynamicResource Green}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Payment Mode  -->
+                <Label
+                Grid.Row="6"
+                Margin="16,3,16,3"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Payment Mode " />
+                <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="16,3,16,3"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding OrderPaymentMode}"/>
+            </StackLayout>
+            <!-- Loyalty Points data
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <Label
+                Grid.Row="6"
+                Margin="16,3,16,3"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Points Earned" />
+                <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="16,3,16,3"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding EarnedPoints}"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <Label
+                Grid.Row="6"
+                Margin="16,3,16,3"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Points Redeemed" />
+                <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="16,3,16,3"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding RedeemedPoints}"/>
+            </StackLayout> 
+            
+             -->
+
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Address Type  
+                <Label
+                Grid.Row="7"
+                Margin="16,0,16,3"
+                FontFamily="{StaticResource Montserrat-Medium}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Address Type" />
+                <Label
+                Grid.Row="7"
+                Grid.Column="1"
+                Margin="16,0,16,3"
+                FontFamily="{DynamicResource Montserrat-Medium}"
+                FontSize="12"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding OrderAddressTypr}" />
+                -->
+            </StackLayout>
+            <!--  Separator  -->
+                <BoxView
+                Grid.Row="7"
+                Grid.ColumnSpan="2"
+                HeightRequest="1"
+                Style="{StaticResource BoxViewStyle}" />
+
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <!--  Total price  -->
+                <Label
+                Grid.Row="8"
+                Margin="16,8,16,8"
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="16"
+                LineHeight="{OnPlatform Android=1.25,
+                                        Default=-1}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="Total"
+                TextColor="{DynamicResource Gray-900}" />
+                <Label
+                Grid.Row="8"
+                Grid.Column="1"
+                Margin="16,8,16,8"
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="16"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                LineHeight="{OnPlatform Android=1.25,
+                                        Default=-1}"
+                Style="{StaticResource PriceLabelStyle}"
+                Text="{Binding TotalAmount, StringFormat='Rs. {0}'}"
+                TextColor="{DynamicResource Gray-900}" />
+            </StackLayout>
+
+            <!--  My Order list  -->
+            <listView:SfListView AutoFitMode="DynamicHeight" BackgroundColor="{DynamicResource Gray-100}" SelectionMode="None" 
+                                         ItemsSource="{Binding LineItemList}" 
+                                         VerticalOptions="Start">
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <converter:StringToColorConverter x:Key="stringToColorConverter" />
+                                </ResourceDictionary>
+                            </Grid.Resources>
+                            <Grid
+                                Margin="0,16,0,0"
+                                BackgroundColor="{DynamicResource Gray-White}"
+                                ColumnSpacing="0"
+                                RowSpacing="0">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="{OnIdiom Default=1, Phone=0}" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  Product image  -->
+                                <Image
+                        Grid.Row="0"
+                        Grid.RowSpan="4"
+                        Grid.Column="0"
+                        Margin="16,8,16,16"
+                        Aspect="Fill"
+                        BackgroundColor="{DynamicResource Gray-200}"
+                        HeightRequest="80"
+                        WidthRequest="80"
+                        Source="{Binding ProductImage}">
+                                </Image>
+
+                                <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,8,0,0"
+                        Padding="0"
+                        HorizontalOptions="Start"
+                        Orientation="Vertical"
+                        Spacing="2"
+                        VerticalOptions="CenterAndExpand">
+                                    <!--  Order ID  -->
+                                    <Label
+                            Margin="0"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="#b51700"
+                            Text="{Binding ProductName}"
+                            VerticalOptions="Center" />
+
+                                    <!--  Order ID  -->
+                                    <Label
+                            Margin="0"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            FontSize="12"
+                            Text="{Binding Quantity, StringFormat='Quantity: {0}'}"
+                            VerticalOptions="Center" />
+                                    <!--  Order ID  -->
+                                    <Label
+                            Margin="0"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            FontSize="12"
+                            Text="{Binding UnitPriceAfterDiscount, StringFormat='Per Unit Price:Rs. {0}'}"
+                            VerticalOptions="Center" />
+                                    <!--  Order ID  -->
+                                    <Label
+                            Margin="0"
+                            FontFamily="{StaticResource Montserrat-Medium}"
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource HyperLink}"
+                            Text="{Binding TotalPrice, StringFormat='Total Price:Rs. {0}'}"
+                            VerticalOptions="Center" />
+                                    <!--  Order status  -->
+
+                                </StackLayout>
+
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+            </listView:SfListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

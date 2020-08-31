@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
+             xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+             x:Class="PyConsumerApp.MainPage">
+
+    <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer" DrawerWidth ="300" DrawerHeaderHeight="160">
+        <navigationdrawer:SfNavigationDrawer.ContentView>
+            <Grid x:Name="mainContentView" BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackLayout BackgroundColor="#1aa1d6" Orientation="Horizontal">
+                    <Button x:Name="hamburgerButton" HeightRequest="50" 
+                            WidthRequest="50" HorizontalOptions="Start" 
+                            FontSize="20" BackgroundColor="#1aa1d6" 
+                            Text="&#xf039;"
+                            Clicked="hamburgerButton_Clicked" FontFamily="FontAwesomeRegular"/>
+                    <Label x:Name="headerLabel" HeightRequest="50" 
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Home" FontSize="16" TextColor="White" BackgroundColor="#1aa1d6"/>
+                </StackLayout>
+                <tabView:SfTabView VisibleHeaderCount="3" Grid.Row="1"
+                           TabHeaderPosition="Bottom"  
+                           OverflowMode="DropDown">
+                    <tabView:SfTabItem Title="CEO">
+                        <tabView:SfTabItem.Content>
+                            <StackLayout>
+                                <Grid BackgroundColor="Green"/>
+                                <Button Text="Contacts" WidthRequest="300" />
+                                <Button Text="Location" WidthRequest="300" />
+                                <Button Text="Email" WidthRequest="300" />
+                            </StackLayout>
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem Title="Patients">
+                        <tabView:SfTabItem.Content>
+                            <Grid BackgroundColor="Blue" x:Name="FavoritesGrid"/>
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem Title="Staff">
+                        <tabView:SfTabItem.Content>
+                            <Grid BackgroundColor="Green" x:Name="ContactsGrid" />
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem Title="Alternative">
+                        <tabView:SfTabItem.Content>
+                            <Grid BackgroundColor="Olive" x:Name="AlternativeGrid" />
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                </tabView:SfTabView>
+            </Grid>
+        </navigationdrawer:SfNavigationDrawer.ContentView>
+        <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+            <Grid BackgroundColor="#1aa1d6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Image Source="icon.png" HeightRequest="110"  BackgroundColor="#1aa1d6" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Text="James Pollock" Grid.Row="1" HorizontalTextAlignment="Center" HorizontalOptions="Center" FontSize="20" TextColor="White"/>
+            </Grid>
+        </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+        <navigationdrawer:SfNavigationDrawer.DrawerContentView>
+            <ListView x:Name="listView" ItemSelected="listView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="40">
+                                <Button x:Name="hamburgerButton" HeightRequest="50" 
+                                    WidthRequest="50" HorizontalOptions="Start" 
+                                    FontSize="20" BackgroundColor="#1aa1d6" 
+                                    Text="&#xf039;"
+                                    FontFamily="FontAwesomeRegular"/>
+                                <Label  Text="{Binding}" FontSize="16" HeightRequest="40" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </navigationdrawer:SfNavigationDrawer.DrawerContentView>
+    </navigationdrawer:SfNavigationDrawer>
+
+</ContentPage>
